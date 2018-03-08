@@ -1,6 +1,0 @@
-stop_id,stop_name,stop_lat,stop_lon,zone_id,stop_code
-BRO1A,Stationnement Brossard / Chevrier,45.4582983759636,-73.4418601064298,3,15001
-MTL6C,Terminus Centre-Ville,45.4982652034138,-73.5661781803096,1,15033
-BRO1C,Stationnement Brossard / Chevrier,45.4582983759636,-73.4418601064298,3,15002
-MTL11B,rue de Nazareth / rue William,45.4969012951214,-73.5591520381756,1,15003
-MTL36D,rue de Nazareth / rue Ottawa,45.4963171751026,-73.5576288179605,1,15004
