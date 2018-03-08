@@ -4,8 +4,8 @@
 package com.kevinlaframboise.gtfsparser.model;
 import java.sql.Date;
 
-// line 167 "../../../../GTFSModel.ump"
-// line 242 "../../../../GTFSModel.ump"
+// line 177 "../../../../GTFSModel.ump"
+// line 252 "../../../../GTFSModel.ump"
 public class FeedInfo
 {
 

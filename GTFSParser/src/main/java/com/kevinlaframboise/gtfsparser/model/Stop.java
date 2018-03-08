@@ -3,8 +3,8 @@
 
 package com.kevinlaframboise.gtfsparser.model;
 
-// line 75 "../../../../GTFSModel.ump"
-// line 206 "../../../../GTFSModel.ump"
+// line 74 "../../../../GTFSModel.ump"
+// line 216 "../../../../GTFSModel.ump"
 public class Stop
 {
 

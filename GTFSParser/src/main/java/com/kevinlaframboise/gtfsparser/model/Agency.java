@@ -5,7 +5,7 @@ package com.kevinlaframboise.gtfsparser.model;
 import java.util.*;
 
 // line 9 "../../../../GTFSModel.ump"
-// line 179 "../../../../GTFSModel.ump"
+// line 189 "../../../../GTFSModel.ump"
 public class Agency
 {
 
@@ -26,10 +26,7 @@ public class Agency
   //Agency Associations
   private List<Route> routes;
   private List<FareAttribute> fareAttributes;
-
-  //Helper Variables
-  private int cachedHashCode;
-  private boolean canSetId;
+  private List<Service> services;
 
   //------------------------
   // CONSTRUCTOR
@@ -37,8 +34,6 @@ public class Agency
 
   public Agency(String aName, String aUrl, String aTimezone)
   {
-    cachedHashCode = -1;
-    canSetId = true;
     id = null;
     name = aName;
     url = aUrl;
@@ -49,6 +44,7 @@ public class Agency
     email = null;
     routes = new ArrayList<Route>();
     fareAttributes = new ArrayList<FareAttribute>();
+    services = new ArrayList<Service>();
   }
 
   //------------------------
@@ -58,7 +54,6 @@ public class Agency
   public boolean setId(String aId)
   {
     boolean wasSet = false;
-    if (!canSetId) { return false; }
     id = aId;
     wasSet = true;
     return wasSet;
@@ -220,6 +215,36 @@ public class Agency
     return index;
   }
 
+  public Service getService(int index)
+  {
+    Service aService = services.get(index);
+    return aService;
+  }
+
+  public List<Service> getServices()
+  {
+    List<Service> newServices = Collections.unmodifiableList(services);
+    return newServices;
+  }
+
+  public int numberOfServices()
+  {
+    int number = services.size();
+    return number;
+  }
+
+  public boolean hasServices()
+  {
+    boolean has = services.size() > 0;
+    return has;
+  }
+
+  public int indexOfService(Service aService)
+  {
+    int index = services.indexOf(aService);
+    return index;
+  }
+
   public static int minimumNumberOfRoutes()
   {
     return 0;
@@ -334,49 +359,68 @@ public class Agency
     return wasAdded;
   }
 
-  public boolean equals(Object obj)
+  public static int minimumNumberOfServices()
   {
-    if (obj == null) { return false; }
-    if (!getClass().equals(obj.getClass())) { return false; }
-
-    Agency compareTo = (Agency)obj;
-  
-    if (getId() == null && compareTo.getId() != null)
-    {
-      return false;
-    }
-    else if (getId() != null && !getId().equals(compareTo.getId()))
-    {
-      return false;
-    }
-
-    return true;
+    return 0;
   }
 
-  public int hashCode()
+  public boolean addService(Service aService)
   {
-    if (cachedHashCode != -1)
-    {
-      return cachedHashCode;
-    }
-    cachedHashCode = 17;
-    if (getId() != null)
-    {
-      cachedHashCode = cachedHashCode * 23 + getId().hashCode();
-    }
-    else
-    {
-      cachedHashCode = cachedHashCode * 23;
-    }
+    boolean wasAdded = false;
+    if (services.contains(aService)) { return false; }
+    services.add(aService);
+    wasAdded = true;
+    return wasAdded;
+  }
 
-    canSetId = false;
-    return cachedHashCode;
+  public boolean removeService(Service aService)
+  {
+    boolean wasRemoved = false;
+    if (services.contains(aService))
+    {
+      services.remove(aService);
+      wasRemoved = true;
+    }
+    return wasRemoved;
+  }
+
+  public boolean addServiceAt(Service aService, int index)
+  {  
+    boolean wasAdded = false;
+    if(addService(aService))
+    {
+      if(index < 0 ) { index = 0; }
+      if(index > numberOfServices()) { index = numberOfServices() - 1; }
+      services.remove(aService);
+      services.add(index, aService);
+      wasAdded = true;
+    }
+    return wasAdded;
+  }
+
+  public boolean addOrMoveServiceAt(Service aService, int index)
+  {
+    boolean wasAdded = false;
+    if(services.contains(aService))
+    {
+      if(index < 0 ) { index = 0; }
+      if(index > numberOfServices()) { index = numberOfServices() - 1; }
+      services.remove(aService);
+      services.add(index, aService);
+      wasAdded = true;
+    } 
+    else 
+    {
+      wasAdded = addServiceAt(aService, index);
+    }
+    return wasAdded;
   }
 
   public void delete()
   {
     routes.clear();
     fareAttributes.clear();
+    services.clear();
   }
 
 

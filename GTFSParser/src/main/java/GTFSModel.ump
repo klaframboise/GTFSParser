@@ -10,6 +10,7 @@ class Agency
 {
   * -> * Route;
   * -> * FareAttribute;
+  * -> * Service;
   lazy String id;
   String name;
   String url;
@@ -18,8 +19,6 @@ class Agency
   lazy String phone;
   lazy fareUrl;
   lazy String email;
-  
-  key {id}
 }
 
 class Route
@@ -44,8 +43,8 @@ class Trip
 {
   * -> * StopTime;
   * -> * Frequency;
+  * -- * Service;
   Route route;
-  Calendar calendar;
   * -> 0..1 Shape;
   String id;
   lazy String headsign;
@@ -55,7 +54,7 @@ class Trip
   defaulted Integer wheelchairAccessible = 0;
   defaulted Integer bikesAllowed = 0;
   
-  key {calendar, route, id}
+  key {route, id}
 }
 
 class StopTime
@@ -124,9 +123,21 @@ class Shape
   key {id}
 }
 
-class Calendar
+class Service
 {
-  * -> 1 Agency;
+  ServiceIndicator serviceIndicator;
+  
+  key {serviceIndicator}
+}
+
+class ServiceIndicator
+{
+  String id;
+}
+
+class Calendar 
+{
+  isA ServiceIndicator;
   String id;
   Boolean monday;
   Boolean tuesday;
@@ -139,10 +150,9 @@ class Calendar
   Date endDate;
 }
 
-class CalendarDate
+class CalendarDate 
 {
-  * -> 1 Agency;
-  String id;
+  isA ServiceIndicator;
   Date date;
   Integer exceptionType;
 }

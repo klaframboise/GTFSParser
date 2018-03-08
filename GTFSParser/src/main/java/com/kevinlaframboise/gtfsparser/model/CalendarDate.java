@@ -4,9 +4,9 @@
 package com.kevinlaframboise.gtfsparser.model;
 import java.sql.Date;
 
-// line 142 "../../../../GTFSModel.ump"
-// line 227 "../../../../GTFSModel.ump"
-public class CalendarDate
+// line 153 "../../../../GTFSModel.ump"
+// line 237 "../../../../GTFSModel.ump"
+public class CalendarDate extends ServiceIndicator
 {
 
   //------------------------
@@ -14,39 +14,23 @@ public class CalendarDate
   //------------------------
 
   //CalendarDate Attributes
-  private String id;
   private Date date;
   private int exceptionType;
-
-  //CalendarDate Associations
-  private Agency agency;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public CalendarDate(String aId, Date aDate, int aExceptionType, Agency aAgency)
+  public CalendarDate(String aId, Date aDate, int aExceptionType)
   {
-    id = aId;
+    super(aId);
     date = aDate;
     exceptionType = aExceptionType;
-    if (!setAgency(aAgency))
-    {
-      throw new RuntimeException("Unable to create CalendarDate due to aAgency");
-    }
   }
 
   //------------------------
   // INTERFACE
   //------------------------
-
-  public boolean setId(String aId)
-  {
-    boolean wasSet = false;
-    id = aId;
-    wasSet = true;
-    return wasSet;
-  }
 
   public boolean setDate(Date aDate)
   {
@@ -64,11 +48,6 @@ public class CalendarDate
     return wasSet;
   }
 
-  public String getId()
-  {
-    return id;
-  }
-
   public Date getDate()
   {
     return date;
@@ -79,34 +58,16 @@ public class CalendarDate
     return exceptionType;
   }
 
-  public Agency getAgency()
-  {
-    return agency;
-  }
-
-  public boolean setAgency(Agency aNewAgency)
-  {
-    boolean wasSet = false;
-    if (aNewAgency != null)
-    {
-      agency = aNewAgency;
-      wasSet = true;
-    }
-    return wasSet;
-  }
-
   public void delete()
   {
-    agency = null;
+    super.delete();
   }
 
 
   public String toString()
   {
     return super.toString() + "["+
-            "id" + ":" + getId()+ "," +
             "exceptionType" + ":" + getExceptionType()+ "]" + System.getProperties().getProperty("line.separator") +
-            "  " + "date" + "=" + (getDate() != null ? !getDate().equals(this)  ? getDate().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-            "  " + "agency = "+(getAgency()!=null?Integer.toHexString(System.identityHashCode(getAgency())):"null");
+            "  " + "date" + "=" + (getDate() != null ? !getDate().equals(this)  ? getDate().toString().replaceAll("  ","    ") : "this" : "null");
   }
 }

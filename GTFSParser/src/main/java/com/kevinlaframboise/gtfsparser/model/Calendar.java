@@ -4,9 +4,9 @@
 package com.kevinlaframboise.gtfsparser.model;
 import java.sql.Date;
 
-// line 127 "../../../../GTFSModel.ump"
-// line 222 "../../../../GTFSModel.ump"
-public class Calendar
+// line 138 "../../../../GTFSModel.ump"
+// line 232 "../../../../GTFSModel.ump"
+public class Calendar extends ServiceIndicator
 {
 
   //------------------------
@@ -14,7 +14,6 @@ public class Calendar
   //------------------------
 
   //Calendar Attributes
-  private String id;
   private boolean monday;
   private boolean tuesday;
   private boolean wednesday;
@@ -25,16 +24,13 @@ public class Calendar
   private Date startDate;
   private Date endDate;
 
-  //Calendar Associations
-  private Agency agency;
-
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public Calendar(String aId, boolean aMonday, boolean aTuesday, boolean aWednesday, boolean aThursday, boolean aFriday, boolean aSaturday, boolean aSunday, Date aStartDate, Date aEndDate, Agency aAgency)
+  public Calendar(String aId, boolean aMonday, boolean aTuesday, boolean aWednesday, boolean aThursday, boolean aFriday, boolean aSaturday, boolean aSunday, Date aStartDate, Date aEndDate)
   {
-    id = aId;
+    super(aId);
     monday = aMonday;
     tuesday = aTuesday;
     wednesday = aWednesday;
@@ -44,23 +40,11 @@ public class Calendar
     sunday = aSunday;
     startDate = aStartDate;
     endDate = aEndDate;
-    if (!setAgency(aAgency))
-    {
-      throw new RuntimeException("Unable to create Calendar due to aAgency");
-    }
   }
 
   //------------------------
   // INTERFACE
   //------------------------
-
-  public boolean setId(String aId)
-  {
-    boolean wasSet = false;
-    id = aId;
-    wasSet = true;
-    return wasSet;
-  }
 
   public boolean setMonday(boolean aMonday)
   {
@@ -132,11 +116,6 @@ public class Calendar
     endDate = aEndDate;
     wasSet = true;
     return wasSet;
-  }
-
-  public String getId()
-  {
-    return id;
   }
 
   public boolean getMonday()
@@ -219,32 +198,15 @@ public class Calendar
     return sunday;
   }
 
-  public Agency getAgency()
-  {
-    return agency;
-  }
-
-  public boolean setAgency(Agency aNewAgency)
-  {
-    boolean wasSet = false;
-    if (aNewAgency != null)
-    {
-      agency = aNewAgency;
-      wasSet = true;
-    }
-    return wasSet;
-  }
-
   public void delete()
   {
-    agency = null;
+    super.delete();
   }
 
 
   public String toString()
   {
     return super.toString() + "["+
-            "id" + ":" + getId()+ "," +
             "monday" + ":" + getMonday()+ "," +
             "tuesday" + ":" + getTuesday()+ "," +
             "wednesday" + ":" + getWednesday()+ "," +
@@ -253,7 +215,6 @@ public class Calendar
             "saturday" + ":" + getSaturday()+ "," +
             "sunday" + ":" + getSunday()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "startDate" + "=" + (getStartDate() != null ? !getStartDate().equals(this)  ? getStartDate().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-            "  " + "endDate" + "=" + (getEndDate() != null ? !getEndDate().equals(this)  ? getEndDate().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-            "  " + "agency = "+(getAgency()!=null?Integer.toHexString(System.identityHashCode(getAgency())):"null");
+            "  " + "endDate" + "=" + (getEndDate() != null ? !getEndDate().equals(this)  ? getEndDate().toString().replaceAll("  ","    ") : "this" : "null");
   }
 }

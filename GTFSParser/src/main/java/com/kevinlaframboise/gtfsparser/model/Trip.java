@@ -4,8 +4,8 @@
 package com.kevinlaframboise.gtfsparser.model;
 import java.util.*;
 
-// line 43 "../../../../GTFSModel.ump"
-// line 192 "../../../../GTFSModel.ump"
+// line 42 "../../../../GTFSModel.ump"
+// line 202 "../../../../GTFSModel.ump"
 public class Trip
 {
 
@@ -15,7 +15,6 @@ public class Trip
 
   //Trip Attributes
   private Route route;
-  private Calendar calendar;
   private String id;
   private String headsign;
   private String shortName;
@@ -27,11 +26,11 @@ public class Trip
   //Trip Associations
   private List<StopTime> stopTimes;
   private List<Frequency> frequencies;
+  private List<Service> services;
   private Shape shape;
 
   //Helper Variables
   private int cachedHashCode;
-  private boolean canSetCalendar;
   private boolean canSetRoute;
   private boolean canSetId;
 
@@ -39,14 +38,12 @@ public class Trip
   // CONSTRUCTOR
   //------------------------
 
-  public Trip(Route aRoute, Calendar aCalendar, String aId)
+  public Trip(Route aRoute, String aId)
   {
     cachedHashCode = -1;
-    canSetCalendar = true;
     canSetRoute = true;
     canSetId = true;
     route = aRoute;
-    calendar = aCalendar;
     id = aId;
     headsign = null;
     shortName = null;
@@ -56,6 +53,7 @@ public class Trip
     resetBikesAllowed();
     stopTimes = new ArrayList<StopTime>();
     frequencies = new ArrayList<Frequency>();
+    services = new ArrayList<Service>();
   }
 
   //------------------------
@@ -67,15 +65,6 @@ public class Trip
     boolean wasSet = false;
     if (!canSetRoute) { return false; }
     route = aRoute;
-    wasSet = true;
-    return wasSet;
-  }
-
-  public boolean setCalendar(Calendar aCalendar)
-  {
-    boolean wasSet = false;
-    if (!canSetCalendar) { return false; }
-    calendar = aCalendar;
     wasSet = true;
     return wasSet;
   }
@@ -156,11 +145,6 @@ public class Trip
   public Route getRoute()
   {
     return route;
-  }
-
-  public Calendar getCalendar()
-  {
-    return calendar;
   }
 
   public String getId()
@@ -265,6 +249,36 @@ public class Trip
   public int indexOfFrequency(Frequency aFrequency)
   {
     int index = frequencies.indexOf(aFrequency);
+    return index;
+  }
+
+  public Service getService(int index)
+  {
+    Service aService = services.get(index);
+    return aService;
+  }
+
+  public List<Service> getServices()
+  {
+    List<Service> newServices = Collections.unmodifiableList(services);
+    return newServices;
+  }
+
+  public int numberOfServices()
+  {
+    int number = services.size();
+    return number;
+  }
+
+  public boolean hasServices()
+  {
+    boolean has = services.size() > 0;
+    return has;
+  }
+
+  public int indexOfService(Service aService)
+  {
+    int index = services.indexOf(aService);
     return index;
   }
 
@@ -395,6 +409,88 @@ public class Trip
     return wasAdded;
   }
 
+  public static int minimumNumberOfServices()
+  {
+    return 0;
+  }
+
+  public boolean addService(Service aService)
+  {
+    boolean wasAdded = false;
+    if (services.contains(aService)) { return false; }
+    services.add(aService);
+    if (aService.indexOfTrip(this) != -1)
+    {
+      wasAdded = true;
+    }
+    else
+    {
+      wasAdded = aService.addTrip(this);
+      if (!wasAdded)
+      {
+        services.remove(aService);
+      }
+    }
+    return wasAdded;
+  }
+
+  public boolean removeService(Service aService)
+  {
+    boolean wasRemoved = false;
+    if (!services.contains(aService))
+    {
+      return wasRemoved;
+    }
+
+    int oldIndex = services.indexOf(aService);
+    services.remove(oldIndex);
+    if (aService.indexOfTrip(this) == -1)
+    {
+      wasRemoved = true;
+    }
+    else
+    {
+      wasRemoved = aService.removeTrip(this);
+      if (!wasRemoved)
+      {
+        services.add(oldIndex,aService);
+      }
+    }
+    return wasRemoved;
+  }
+
+  public boolean addServiceAt(Service aService, int index)
+  {  
+    boolean wasAdded = false;
+    if(addService(aService))
+    {
+      if(index < 0 ) { index = 0; }
+      if(index > numberOfServices()) { index = numberOfServices() - 1; }
+      services.remove(aService);
+      services.add(index, aService);
+      wasAdded = true;
+    }
+    return wasAdded;
+  }
+
+  public boolean addOrMoveServiceAt(Service aService, int index)
+  {
+    boolean wasAdded = false;
+    if(services.contains(aService))
+    {
+      if(index < 0 ) { index = 0; }
+      if(index > numberOfServices()) { index = numberOfServices() - 1; }
+      services.remove(aService);
+      services.add(index, aService);
+      wasAdded = true;
+    } 
+    else 
+    {
+      wasAdded = addServiceAt(aService, index);
+    }
+    return wasAdded;
+  }
+
   public boolean setShape(Shape aNewShape)
   {
     boolean wasSet = false;
@@ -410,15 +506,6 @@ public class Trip
 
     Trip compareTo = (Trip)obj;
   
-    if (getCalendar() == null && compareTo.getCalendar() != null)
-    {
-      return false;
-    }
-    else if (getCalendar() != null && !getCalendar().equals(compareTo.getCalendar()))
-    {
-      return false;
-    }
-
     if (getRoute() == null && compareTo.getRoute() != null)
     {
       return false;
@@ -447,15 +534,6 @@ public class Trip
       return cachedHashCode;
     }
     cachedHashCode = 17;
-    if (getCalendar() != null)
-    {
-      cachedHashCode = cachedHashCode * 23 + getCalendar().hashCode();
-    }
-    else
-    {
-      cachedHashCode = cachedHashCode * 23;
-    }
-
     if (getRoute() != null)
     {
       cachedHashCode = cachedHashCode * 23 + getRoute().hashCode();
@@ -474,7 +552,6 @@ public class Trip
       cachedHashCode = cachedHashCode * 23;
     }
 
-    canSetCalendar = false;
     canSetRoute = false;
     canSetId = false;
     return cachedHashCode;
@@ -484,6 +561,12 @@ public class Trip
   {
     stopTimes.clear();
     frequencies.clear();
+    ArrayList<Service> copyOfServices = new ArrayList<Service>(services);
+    services.clear();
+    for(Service aService : copyOfServices)
+    {
+      aService.removeTrip(this);
+    }
     shape = null;
   }
 
@@ -498,7 +581,6 @@ public class Trip
             "block" + ":" + getBlock()+ "," +
             "wheelchairAccessible" + ":" + getWheelchairAccessible()+ "," +
             "bikesAllowed" + ":" + getBikesAllowed()+ "]" + System.getProperties().getProperty("line.separator") +
-            "  " + "calendar" + "=" + (getCalendar() != null ? !getCalendar().equals(this)  ? getCalendar().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
             "  " + "route" + "=" + (getRoute() != null ? !getRoute().equals(this)  ? getRoute().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
             "  " + "shape = "+(getShape()!=null?Integer.toHexString(System.identityHashCode(getShape())):"null");
   }

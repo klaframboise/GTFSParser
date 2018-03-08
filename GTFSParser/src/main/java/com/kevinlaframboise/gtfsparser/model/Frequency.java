@@ -4,8 +4,8 @@
 package com.kevinlaframboise.gtfsparser.model;
 import java.sql.Time;
 
-// line 150 "../../../../GTFSModel.ump"
-// line 232 "../../../../GTFSModel.ump"
+// line 160 "../../../../GTFSModel.ump"
+// line 242 "../../../../GTFSModel.ump"
 public class Frequency
 {
 

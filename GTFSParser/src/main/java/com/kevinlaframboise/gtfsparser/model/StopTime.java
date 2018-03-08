@@ -4,8 +4,8 @@
 package com.kevinlaframboise.gtfsparser.model;
 import java.sql.Time;
 
-// line 61 "../../../../GTFSModel.ump"
-// line 199 "../../../../GTFSModel.ump"
+// line 60 "../../../../GTFSModel.ump"
+// line 209 "../../../../GTFSModel.ump"
 public class StopTime
 {
 

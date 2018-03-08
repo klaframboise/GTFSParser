@@ -3,8 +3,8 @@
 
 package com.kevinlaframboise.gtfsparser.model;
 
-// line 107 "../../../../GTFSModel.ump"
-// line 252 "../../../../GTFSModel.ump"
+// line 106 "../../../../GTFSModel.ump"
+// line 262 "../../../../GTFSModel.ump"
 public class FareRule
 {
 

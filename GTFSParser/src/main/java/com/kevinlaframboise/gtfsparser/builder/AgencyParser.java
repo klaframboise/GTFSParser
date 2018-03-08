@@ -1,9 +1,8 @@
 package com.kevinlaframboise.gtfsparser.builder;
 
 import java.io.File;
-import java.io.FileReader;
-import java.io.InputStreamReader;
 import java.io.IOException;
+import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URI;
 import java.net.URL;
@@ -16,12 +15,26 @@ import org.apache.commons.io.input.BOMInputStream;
 import com.kevinlaframboise.gtfsparser.controller.AgencyController;
 import com.kevinlaframboise.gtfsparser.model.Agency;
 
-public class AgencyParser {
+/**
+ * This class parses the agency.txt file of the GTFS model.
+ * @author Kevin Laframboise
+ *
+ */
+public class AgencyParser implements GTFSParser {
 	
+	public static final int NUM_OF_REQ_FIELDS = 3;
+	
+	/**
+	 * File to be parsed, agency.txt respecting the GTFS format.
+	 */
 	private File file;
+	
+	/**
+	 * Controller handling the model.
+	 */
 	private AgencyController controller;
 
-	//Agency Attributes
+	/* Agency Attributes */
 	private String id;
 	private String name;
 	private String url;
@@ -36,56 +49,89 @@ public class AgencyParser {
 		controller = new AgencyController();
 	}
 	
-	public void parse() throws IOException {
+	@Override
+	public void parse() throws IOException {	
+		
+		// Get file url
 		URI fileUri = file.toURI();
 		URL fileUrl = fileUri.toURL();
+		
+		// Using BOM input stream to deal with byte-order mark charcater
 		Reader reader = new InputStreamReader(new BOMInputStream(fileUrl.openStream()), "UTF-8");
-		final CSVParser parser = new CSVParser(reader, CSVFormat.EXCEL.withFirstRecordAsHeader());
+		
+		/* Parse the agency */ 
+		CSVParser parser = new CSVParser(reader, CSVFormat.EXCEL.withFirstRecordAsHeader());
 		Agency anAgency;
 		for(CSVRecord record : parser) {
-			id = record.get(Header.agency_id);
-			name = record.get(Header.agency_name);
-			timezone = record.get(Header.agency_timezone);
-			anAgency = controller.createAgency(id, name, timezone);
+			// Discard malformed records
+			if(record.size() < NUM_OF_REQ_FIELDS) continue;
+			
+			url = record.get(Headers.agency_url);
+			name = record.get(Headers.agency_name);
+			timezone = record.get(Headers.agency_timezone);
+			anAgency = controller.createAgency(name, url, timezone);
 			
 			try {
-				url = record.get(Header.agency_url);
-				anAgency.setUrl(url);
+				id = record.get(Headers.agency_id);
+				anAgency.setId(id);
 			} catch (IllegalArgumentException e) {
 				// Do nothing, optional attribute
 			}
 			
 			try {
-				lang = record.get(Header.agency_lang);
+				lang = record.get(Headers.agency_lang);
 				anAgency.setLang(lang);
 			} catch (IllegalArgumentException e) {
 				// Do nothing, optional attribute
 			}
 			
 			try {
-				phone = record.get(Header.agency_phone);
+				phone = record.get(Headers.agency_phone);
 				anAgency.setPhone(phone);
 			} catch (IllegalArgumentException e) {
 				// Do nothing, optional attribute
 			}
 			
 			try {
-				fareUrl = record.get(Header.agency_fare_url);
+				fareUrl = record.get(Headers.agency_fare_url);
 				anAgency.setFareUrl(fareUrl);
 			} catch (IllegalArgumentException e) {
 				// Do nothing, optional attribute
 			}
 			
 			try {
-				email = record.get(Header.agency_email);
+				email = record.get(Headers.agency_email);
 				anAgency.setEmail(email);
 			} catch (IllegalArgumentException e) {
 				// Do nothing, optional attribute
 			}
+			
+			/* Parse agency's association */
+			// Calendar
+			new CalendarParser(new File(file.getParentFile(), "calendar.txt"), anAgency).parse();
+			
+			// Calendar dates, optional file
+			File cDate = new File(file.getParentFile(), "calendar_dates.txt");
+			if (cDate.exists()) new CalendarDateParser(cDate, anAgency).parse();
+			
+			//Routes
+			new RouteParser(new File(file.getParentFile(), "routes.txt"), anAgency).parse();
+			
+			//Trips
+			new TripParser(new File(file.getParentFile(), "trips.txt"), anAgency).parse();
+			
 		}
+		parser.close();
 	}
 	
-	enum Header {
+	/**
+	 * Headers of the GTFS agency.txt files.
+	 * Apache Commons uses the enum element's identifier as the header name, 
+	 * hence why they do not respect Java naming convention.
+	 * @author Kevin Laframboise
+	 *
+	 */
+	enum Headers {
 		agency_id,agency_name,agency_url,agency_timezone,agency_lang,agency_phone,agency_fare_url,agency_email
 	}
 	
