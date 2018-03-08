@@ -11,6 +11,7 @@ class Agency
   * -> * Route;
   * -> * FareAttribute;
   * -> * Service;
+  * -> * Stop;
   lazy String id;
   String name;
   String url;
@@ -67,7 +68,7 @@ class StopTime
   lazy String headsign;
   defaulted Integer pickupType = 0;
   defaulted Integer dropOffType = 0;
-  lazy Float shadeDistTraveled;
+  lazy Float shapeDistTraveled;
   defaulted Integer timepoint = 2;
 }
 

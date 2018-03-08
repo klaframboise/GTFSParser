@@ -120,6 +120,12 @@ public class AgencyParser implements GTFSParser {
 			//Trips
 			new TripParser(new File(file.getParentFile(), "trips.txt"), anAgency).parse();
 			
+			//Stops
+			new StopParser(new File(file.getParentFile(),"stops.txt"), anAgency).parse();
+			
+			//Stop times
+			new StopTimeParser(new File(file.getParentFile(), "stop_times.txt"), anAgency).parse();
+			
 		}
 		parser.close();
 	}

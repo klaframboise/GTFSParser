@@ -5,7 +5,7 @@ package com.kevinlaframboise.gtfsparser.model;
 import java.util.*;
 
 // line 9 "../../../../GTFSModel.ump"
-// line 189 "../../../../GTFSModel.ump"
+// line 190 "../../../../GTFSModel.ump"
 public class Agency
 {
 
@@ -27,6 +27,7 @@ public class Agency
   private List<Route> routes;
   private List<FareAttribute> fareAttributes;
   private List<Service> services;
+  private List<Stop> stops;
 
   //------------------------
   // CONSTRUCTOR
@@ -45,6 +46,7 @@ public class Agency
     routes = new ArrayList<Route>();
     fareAttributes = new ArrayList<FareAttribute>();
     services = new ArrayList<Service>();
+    stops = new ArrayList<Stop>();
   }
 
   //------------------------
@@ -245,6 +247,36 @@ public class Agency
     return index;
   }
 
+  public Stop getStop(int index)
+  {
+    Stop aStop = stops.get(index);
+    return aStop;
+  }
+
+  public List<Stop> getStops()
+  {
+    List<Stop> newStops = Collections.unmodifiableList(stops);
+    return newStops;
+  }
+
+  public int numberOfStops()
+  {
+    int number = stops.size();
+    return number;
+  }
+
+  public boolean hasStops()
+  {
+    boolean has = stops.size() > 0;
+    return has;
+  }
+
+  public int indexOfStop(Stop aStop)
+  {
+    int index = stops.indexOf(aStop);
+    return index;
+  }
+
   public static int minimumNumberOfRoutes()
   {
     return 0;
@@ -416,11 +448,69 @@ public class Agency
     return wasAdded;
   }
 
+  public static int minimumNumberOfStops()
+  {
+    return 0;
+  }
+
+  public boolean addStop(Stop aStop)
+  {
+    boolean wasAdded = false;
+    if (stops.contains(aStop)) { return false; }
+    stops.add(aStop);
+    wasAdded = true;
+    return wasAdded;
+  }
+
+  public boolean removeStop(Stop aStop)
+  {
+    boolean wasRemoved = false;
+    if (stops.contains(aStop))
+    {
+      stops.remove(aStop);
+      wasRemoved = true;
+    }
+    return wasRemoved;
+  }
+
+  public boolean addStopAt(Stop aStop, int index)
+  {  
+    boolean wasAdded = false;
+    if(addStop(aStop))
+    {
+      if(index < 0 ) { index = 0; }
+      if(index > numberOfStops()) { index = numberOfStops() - 1; }
+      stops.remove(aStop);
+      stops.add(index, aStop);
+      wasAdded = true;
+    }
+    return wasAdded;
+  }
+
+  public boolean addOrMoveStopAt(Stop aStop, int index)
+  {
+    boolean wasAdded = false;
+    if(stops.contains(aStop))
+    {
+      if(index < 0 ) { index = 0; }
+      if(index > numberOfStops()) { index = numberOfStops() - 1; }
+      stops.remove(aStop);
+      stops.add(index, aStop);
+      wasAdded = true;
+    } 
+    else 
+    {
+      wasAdded = addStopAt(aStop, index);
+    }
+    return wasAdded;
+  }
+
   public void delete()
   {
     routes.clear();
     fareAttributes.clear();
     services.clear();
+    stops.clear();
   }
 
 

@@ -4,8 +4,8 @@
 package com.kevinlaframboise.gtfsparser.model;
 import java.sql.Date;
 
-// line 153 "../../../../GTFSModel.ump"
-// line 237 "../../../../GTFSModel.ump"
+// line 154 "../../../../GTFSModel.ump"
+// line 238 "../../../../GTFSModel.ump"
 public class CalendarDate extends ServiceIndicator
 {
 

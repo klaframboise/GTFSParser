@@ -7,6 +7,7 @@ import com.kevinlaframboise.gtfsparser.model.Agency;
 import com.kevinlaframboise.gtfsparser.model.GTFSModel;
 import com.kevinlaframboise.gtfsparser.model.Route;
 import com.kevinlaframboise.gtfsparser.model.Service;
+import com.kevinlaframboise.gtfsparser.model.Stop;
 import com.kevinlaframboise.gtfsparser.model.Trip;
 
 public class AgencyController {
@@ -50,6 +51,24 @@ public class AgencyController {
 	}
 	
 	/**
+	 * Finds a stop belonging to the given agency with the given id.
+	 * Works on the principle that two Stop objects are considered equal if
+	 * the id and agency are equal.
+	 * @param agency
+	 * @param id
+	 * @return if found, the stop. Null otherwise.
+	 */
+	public Stop getStopById(Agency agency, String id) {
+		
+		List<Stop> stops = agency.getStops();
+		Stop comparisonStop = new Stop(id, null, 0, 0);
+		int index = stops.indexOf(comparisonStop);
+		if(index >= 0) return stops.get(index); 
+		else return null;
+		
+	}
+	
+	/**
 	 * Finds a trip belonging to the given route with the given id.
 	 * Works on the principle that two Trip objects are considered equal if
 	 * the id and route are equal.
@@ -65,6 +84,24 @@ public class AgencyController {
 		if(index >= 0) return trips.get(index); 
 		else return null;
 		
+	}
+	
+	/**
+	 * Finds a trip belonging to the given agency with the given id.
+	 * Works on the principle that two Trip objects are considered equal if
+	 * the ids are equal.
+	 * @param agency
+	 * @param id
+	 * @return if found, the trip. Null otherwise.
+	 */
+	public Trip getTripByIdInAgency(Agency agency, String id) {
+		
+		Trip trip = null;
+		for(Route route : agency.getRoutes()) {
+			trip = getTripById(route, id);
+			if(trip != null) return trip;
+		}
+		return trip;
 	}
 	
 	/**

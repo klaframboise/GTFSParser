@@ -3,7 +3,7 @@
 
 package com.kevinlaframboise.gtfsparser.model;
 
-// line 133 "../../../../GTFSModel.ump"
+// line 134 "../../../../GTFSModel.ump"
 public class ServiceIndicator
 {
 

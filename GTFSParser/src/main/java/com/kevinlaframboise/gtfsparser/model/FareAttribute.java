@@ -4,8 +4,8 @@
 package com.kevinlaframboise.gtfsparser.model;
 import java.util.*;
 
-// line 92 "../../../../GTFSModel.ump"
-// line 222 "../../../../GTFSModel.ump"
+// line 93 "../../../../GTFSModel.ump"
+// line 223 "../../../../GTFSModel.ump"
 public class FareAttribute
 {
 

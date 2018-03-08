@@ -12,6 +12,7 @@ import com.kevinlaframboise.gtfsparser.model.GTFSModel;
 import com.kevinlaframboise.gtfsparser.model.Route;
 import com.kevinlaframboise.gtfsparser.model.Service;
 import com.kevinlaframboise.gtfsparser.model.ServiceIndicator;
+import com.kevinlaframboise.gtfsparser.model.Stop;
 import com.kevinlaframboise.gtfsparser.model.Trip;
 
 public class TestAgencyController {
@@ -97,6 +98,44 @@ public class TestAgencyController {
 		route.addTrip(testTrip);
 		Trip foundTrip = controller.getTripById(route, "another id");
 		assertNull(foundTrip);
+	}
+	
+	@Test
+	public void testGetTripByIdInAgency() {
+		String testId = "test trip";
+		Trip testTrip = new Trip(route, testId);
+		route.addTrip(testTrip);
+		agency.addRoute(route);
+		Trip foundTrip = controller.getTripByIdInAgency(agency, testId);
+		assertSame(testTrip, foundTrip);
+	}
+	
+	@Test
+	public void testGetTripByIdInAgencyTripNotFound() {
+		String testId = "test trip";
+		Trip testTrip = new Trip(route, testId);
+		route.addTrip(testTrip);
+		agency.addRoute(route);
+		Trip foundTrip = controller.getTripByIdInAgency(agency, "another id");
+		assertNull(foundTrip);
+	}
+	
+	@Test
+	public void testGetStopById() {
+		String testId = "test stop";
+		Stop testStop = new Stop(testId, "name", 0, 0);
+		agency.addStop(testStop);
+		Stop foundStop = controller.getStopById(agency, testId);
+		assertSame(testStop, foundStop);
+	}
+	
+	@Test
+	public void testGetStopByIdStopNotFound() {
+		String testId = "test stop";
+		Stop testStop = new Stop(testId, "name", 0, 0);
+		agency.addStop(testStop);
+		Stop foundStop = controller.getStopById(agency, "another id");
+		assertNull(foundStop);
 	}
 
 }

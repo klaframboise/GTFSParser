@@ -4,8 +4,8 @@
 package com.kevinlaframboise.gtfsparser.model;
 import java.util.*;
 
-// line 24 "../../../../GTFSModel.ump"
-// line 195 "../../../../GTFSModel.ump"
+// line 25 "../../../../GTFSModel.ump"
+// line 196 "../../../../GTFSModel.ump"
 public class Route
 {
 

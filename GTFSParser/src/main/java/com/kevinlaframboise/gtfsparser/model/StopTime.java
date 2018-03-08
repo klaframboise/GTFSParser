@@ -4,8 +4,8 @@
 package com.kevinlaframboise.gtfsparser.model;
 import java.sql.Time;
 
-// line 60 "../../../../GTFSModel.ump"
-// line 209 "../../../../GTFSModel.ump"
+// line 61 "../../../../GTFSModel.ump"
+// line 210 "../../../../GTFSModel.ump"
 public class StopTime
 {
 
@@ -20,7 +20,7 @@ public class StopTime
   private String headsign;
   private int pickupType;
   private int dropOffType;
-  private float shadeDistTraveled;
+  private float shapeDistTraveled;
   private int timepoint;
 
   //StopTime Associations
@@ -39,7 +39,7 @@ public class StopTime
     headsign = null;
     resetPickupType();
     resetDropOffType();
-    shadeDistTraveled = 0.0f;
+    shapeDistTraveled = 0.0f;
     resetTimepoint();
     if (!setTrip(aTrip))
     {
@@ -119,10 +119,10 @@ public class StopTime
     return wasReset;
   }
 
-  public boolean setShadeDistTraveled(float aShadeDistTraveled)
+  public boolean setShapeDistTraveled(float aShapeDistTraveled)
   {
     boolean wasSet = false;
-    shadeDistTraveled = aShadeDistTraveled;
+    shapeDistTraveled = aShapeDistTraveled;
     wasSet = true;
     return wasSet;
   }
@@ -183,9 +183,9 @@ public class StopTime
     return 0;
   }
 
-  public float getShadeDistTraveled()
+  public float getShapeDistTraveled()
   {
-    return shadeDistTraveled;
+    return shapeDistTraveled;
   }
 
   public int getTimepoint()
@@ -244,7 +244,7 @@ public class StopTime
             "headsign" + ":" + getHeadsign()+ "," +
             "pickupType" + ":" + getPickupType()+ "," +
             "dropOffType" + ":" + getDropOffType()+ "," +
-            "shadeDistTraveled" + ":" + getShadeDistTraveled()+ "," +
+            "shapeDistTraveled" + ":" + getShapeDistTraveled()+ "," +
             "timepoint" + ":" + getTimepoint()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "arrivalTime" + "=" + (getArrivalTime() != null ? !getArrivalTime().equals(this)  ? getArrivalTime().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
             "  " + "departureTime" + "=" + (getDepartureTime() != null ? !getDepartureTime().equals(this)  ? getDepartureTime().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +

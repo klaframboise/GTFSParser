@@ -3,8 +3,8 @@
 
 package com.kevinlaframboise.gtfsparser.model;
 
-// line 169 "../../../../GTFSModel.ump"
-// line 247 "../../../../GTFSModel.ump"
+// line 170 "../../../../GTFSModel.ump"
+// line 248 "../../../../GTFSModel.ump"
 public class Transfer
 {
 

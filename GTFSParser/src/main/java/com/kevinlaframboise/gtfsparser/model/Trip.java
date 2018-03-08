@@ -4,8 +4,8 @@
 package com.kevinlaframboise.gtfsparser.model;
 import java.util.*;
 
-// line 42 "../../../../GTFSModel.ump"
-// line 202 "../../../../GTFSModel.ump"
+// line 43 "../../../../GTFSModel.ump"
+// line 203 "../../../../GTFSModel.ump"
 public class Trip
 {
 

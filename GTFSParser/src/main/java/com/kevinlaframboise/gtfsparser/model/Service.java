@@ -4,7 +4,7 @@
 package com.kevinlaframboise.gtfsparser.model;
 import java.util.*;
 
-// line 126 "../../../../GTFSModel.ump"
+// line 127 "../../../../GTFSModel.ump"
 public class Service
 {
 
