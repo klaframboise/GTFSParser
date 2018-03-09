@@ -126,3 +126,6 @@ gradle-app.setting
 
 # GTFS source
 GTFSParser/gtfs
+
+# Test project for OneBusAway
+OneBusAwayTest/
