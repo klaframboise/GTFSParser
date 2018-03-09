@@ -81,7 +81,6 @@ public class RouteParser implements GTFSParser {
 
 			//Create Route object
 			aRoute = new Route(id, shortName, longName, type);
-			aRoute.setAgency(agency);
 			
 			/* Optional records */
 			try {

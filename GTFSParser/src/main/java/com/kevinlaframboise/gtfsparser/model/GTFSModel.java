@@ -6,7 +6,7 @@ import java.util.*;
 import java.sql.Date;
 
 // line 2 "../../../../GTFSModel.ump"
-// line 258 "../../../../GTFSModel.ump"
+// line 252 "../../../../GTFSModel.ump"
 public class GTFSModel
 {
 

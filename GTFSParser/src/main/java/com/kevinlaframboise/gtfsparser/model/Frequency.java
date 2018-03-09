@@ -4,8 +4,8 @@
 package com.kevinlaframboise.gtfsparser.model;
 import java.sql.Time;
 
-// line 161 "../../../../GTFSModel.ump"
-// line 243 "../../../../GTFSModel.ump"
+// line 156 "../../../../GTFSModel.ump"
+// line 237 "../../../../GTFSModel.ump"
 public class Frequency
 {
 
@@ -19,23 +19,16 @@ public class Frequency
   private int headwaySecs;
   private boolean exactTimes;
 
-  //Frequency Associations
-  private Trip trip;
-
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public Frequency(Time aStartTime, Time aEndTime, int aHeadwaySecs, Trip aTrip)
+  public Frequency(Time aStartTime, Time aEndTime, int aHeadwaySecs)
   {
     startTime = aStartTime;
     endTime = aEndTime;
     headwaySecs = aHeadwaySecs;
     resetExactTimes();
-    if (!setTrip(aTrip))
-    {
-      throw new RuntimeException("Unable to create Frequency due to aTrip");
-    }
   }
 
   //------------------------
@@ -112,26 +105,8 @@ public class Frequency
     return exactTimes;
   }
 
-  public Trip getTrip()
-  {
-    return trip;
-  }
-
-  public boolean setTrip(Trip aNewTrip)
-  {
-    boolean wasSet = false;
-    if (aNewTrip != null)
-    {
-      trip = aNewTrip;
-      wasSet = true;
-    }
-    return wasSet;
-  }
-
   public void delete()
-  {
-    trip = null;
-  }
+  {}
 
 
   public String toString()
@@ -140,7 +115,6 @@ public class Frequency
             "headwaySecs" + ":" + getHeadwaySecs()+ "," +
             "exactTimes" + ":" + getExactTimes()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "startTime" + "=" + (getStartTime() != null ? !getStartTime().equals(this)  ? getStartTime().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-            "  " + "endTime" + "=" + (getEndTime() != null ? !getEndTime().equals(this)  ? getEndTime().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-            "  " + "trip = "+(getTrip()!=null?Integer.toHexString(System.identityHashCode(getTrip())):"null");
+            "  " + "endTime" + "=" + (getEndTime() != null ? !getEndTime().equals(this)  ? getEndTime().toString().replaceAll("  ","    ") : "this" : "null");
   }
 }

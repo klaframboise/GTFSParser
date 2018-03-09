@@ -4,8 +4,8 @@
 package com.kevinlaframboise.gtfsparser.model;
 import java.util.*;
 
-// line 116 "../../../../GTFSModel.ump"
-// line 228 "../../../../GTFSModel.ump"
+// line 111 "../../../../GTFSModel.ump"
+// line 222 "../../../../GTFSModel.ump"
 public class Shape
 {
 

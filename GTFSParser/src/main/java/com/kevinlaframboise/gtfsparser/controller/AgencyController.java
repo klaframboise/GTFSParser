@@ -43,7 +43,6 @@ public class AgencyController {
 		
 		List<Route> routes = agency.getRoutes();
 		Route comparisonRoute = new Route(id, null, null, 0);
-		comparisonRoute.setAgency(agency);
 		int index = routes.indexOf(comparisonRoute);
 		if(index >= 0) return routes.get(index); 
 		else return null;
@@ -58,15 +57,15 @@ public class AgencyController {
 	 * @param id
 	 * @return if found, the stop. Null otherwise.
 	 */
-	public Stop getStopById(Agency agency, String id) {
-		
-		List<Stop> stops = agency.getStops();
-		Stop comparisonStop = new Stop(id, null, 0, 0);
-		int index = stops.indexOf(comparisonStop);
-		if(index >= 0) return stops.get(index); 
-		else return null;
-		
-	}
+//	public Stop getStopById(Agency agency, String id) {
+//		
+//		List<Stop> stops = agency.getStops();
+//		Stop comparisonStop = new Stop(id, null, 0, 0);
+//		int index = stops.indexOf(comparisonStop);
+//		if(index >= 0) return stops.get(index); 
+//		else return null;
+//		
+//	}
 	
 	/**
 	 * Finds a trip belonging to the given route with the given id.
@@ -79,7 +78,7 @@ public class AgencyController {
 	public Trip getTripById(Route route, String id) {
 		
 		List<Trip> trips = route.getTrips();
-		Trip comparisonTrip = new Trip(route, id);
+		Trip comparisonTrip = new Trip(id);
 		int index = trips.indexOf(comparisonTrip);
 		if(index >= 0) return trips.get(index); 
 		else return null;

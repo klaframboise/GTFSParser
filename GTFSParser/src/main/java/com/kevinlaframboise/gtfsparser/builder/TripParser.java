@@ -7,6 +7,7 @@ import java.io.Reader;
 import java.net.URI;
 import java.net.URL;
 import java.util.List;
+import java.util.TreeMap;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -24,7 +25,7 @@ import com.kevinlaframboise.gtfsparser.model.Trip;
  * @author Kevin Laframboise
  *
  */
-public class TripParser implements GTFSParser {
+public class TripParser {
 
 	public static final int NUM_OF_REQ_FIELDS = 3;
 
@@ -54,8 +55,9 @@ public class TripParser implements GTFSParser {
 		this.agency = agency;
 	}
 
-	@Override
-	public void parse() throws IOException {
+	public TreeMap<String, Trip> parse() throws IOException {
+		// Initialize return object
+		TreeMap<String, Trip> trips = new TreeMap<String, Trip>();
 		// Get file url
 		URI fileUri = file.toURI();
 		URL fileUrl = fileUri.toURL();
@@ -82,7 +84,7 @@ public class TripParser implements GTFSParser {
 			services = controller.getServiceById(agency, serviceId);
 
 			//Create Trip object
-			aTrip = new Trip(route, id);
+			aTrip = new Trip(id);
 
 			/* Optional records */
 			try {
@@ -129,15 +131,16 @@ public class TripParser implements GTFSParser {
 				// Do nothing, optional attribute
 			}
 
-			//Add trip to route and service
+			//Add trip to route, service and list of trips
 			route.addTrip(aTrip);
 			for(Service service : services) {
-				service.addTrip(aTrip);
 				aTrip.addService(service);
 			}
+			trips.put(id, aTrip);
 		}
 		
 		parser.close();
+		return trips;
 
 	}
 

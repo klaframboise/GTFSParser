@@ -4,8 +4,8 @@
 package com.kevinlaframboise.gtfsparser.model;
 import java.sql.Time;
 
-// line 61 "../../../../GTFSModel.ump"
-// line 210 "../../../../GTFSModel.ump"
+// line 58 "../../../../GTFSModel.ump"
+// line 204 "../../../../GTFSModel.ump"
 public class StopTime
 {
 
@@ -24,14 +24,13 @@ public class StopTime
   private int timepoint;
 
   //StopTime Associations
-  private Trip trip;
   private Stop stop;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public StopTime(Time aArrivalTime, Time aDepartureTime, int aSequence, Trip aTrip, Stop aStop)
+  public StopTime(Time aArrivalTime, Time aDepartureTime, int aSequence, Stop aStop)
   {
     arrivalTime = aArrivalTime;
     departureTime = aDepartureTime;
@@ -41,10 +40,6 @@ public class StopTime
     resetDropOffType();
     shapeDistTraveled = 0.0f;
     resetTimepoint();
-    if (!setTrip(aTrip))
-    {
-      throw new RuntimeException("Unable to create StopTime due to aTrip");
-    }
     if (!setStop(aStop))
     {
       throw new RuntimeException("Unable to create StopTime due to aStop");
@@ -198,25 +193,9 @@ public class StopTime
     return 2;
   }
 
-  public Trip getTrip()
-  {
-    return trip;
-  }
-
   public Stop getStop()
   {
     return stop;
-  }
-
-  public boolean setTrip(Trip aNewTrip)
-  {
-    boolean wasSet = false;
-    if (aNewTrip != null)
-    {
-      trip = aNewTrip;
-      wasSet = true;
-    }
-    return wasSet;
   }
 
   public boolean setStop(Stop aNewStop)
@@ -232,7 +211,6 @@ public class StopTime
 
   public void delete()
   {
-    trip = null;
     stop = null;
   }
 
@@ -248,7 +226,6 @@ public class StopTime
             "timepoint" + ":" + getTimepoint()+ "]" + System.getProperties().getProperty("line.separator") +
             "  " + "arrivalTime" + "=" + (getArrivalTime() != null ? !getArrivalTime().equals(this)  ? getArrivalTime().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
             "  " + "departureTime" + "=" + (getDepartureTime() != null ? !getDepartureTime().equals(this)  ? getDepartureTime().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-            "  " + "trip = "+(getTrip()!=null?Integer.toHexString(System.identityHashCode(getTrip())):"null") + System.getProperties().getProperty("line.separator") +
             "  " + "stop = "+(getStop()!=null?Integer.toHexString(System.identityHashCode(getStop())):"null");
   }
 }

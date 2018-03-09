@@ -3,8 +3,8 @@
 
 package com.kevinlaframboise.gtfsparser.model;
 
-// line 107 "../../../../GTFSModel.ump"
-// line 263 "../../../../GTFSModel.ump"
+// line 103 "../../../../GTFSModel.ump"
+// line 257 "../../../../GTFSModel.ump"
 public class FareRule
 {
 
@@ -17,9 +17,6 @@ public class FareRule
   private String originId;
   private String destinationId;
   private String containsId;
-
-  //FareRule Associations
-  private Route route;
 
   //------------------------
   // CONSTRUCTOR
@@ -89,29 +86,8 @@ public class FareRule
     return containsId;
   }
 
-  public Route getRoute()
-  {
-    return route;
-  }
-
-  public boolean hasRoute()
-  {
-    boolean has = route != null;
-    return has;
-  }
-
-  public boolean setRoute(Route aNewRoute)
-  {
-    boolean wasSet = false;
-    route = aNewRoute;
-    wasSet = true;
-    return wasSet;
-  }
-
   public void delete()
-  {
-    route = null;
-  }
+  {}
 
 
   public String toString()
@@ -120,7 +96,6 @@ public class FareRule
             "originId" + ":" + getOriginId()+ "," +
             "destinationId" + ":" + getDestinationId()+ "," +
             "containsId" + ":" + getContainsId()+ "]" + System.getProperties().getProperty("line.separator") +
-            "  " + "attribute" + "=" + (getAttribute() != null ? !getAttribute().equals(this)  ? getAttribute().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
-            "  " + "route = "+(getRoute()!=null?Integer.toHexString(System.identityHashCode(getRoute())):"null");
+            "  " + "attribute" + "=" + (getAttribute() != null ? !getAttribute().equals(this)  ? getAttribute().toString().replaceAll("  ","    ") : "this" : "null");
   }
 }

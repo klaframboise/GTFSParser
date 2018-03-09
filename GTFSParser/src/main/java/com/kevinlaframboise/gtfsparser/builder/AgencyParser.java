@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URI;
 import java.net.URL;
+import java.util.TreeMap;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -14,6 +15,8 @@ import org.apache.commons.io.input.BOMInputStream;
 
 import com.kevinlaframboise.gtfsparser.controller.AgencyController;
 import com.kevinlaframboise.gtfsparser.model.Agency;
+import com.kevinlaframboise.gtfsparser.model.Stop;
+import com.kevinlaframboise.gtfsparser.model.Trip;
 
 /**
  * This class parses the agency.txt file of the GTFS model.
@@ -118,13 +121,13 @@ public class AgencyParser implements GTFSParser {
 			new RouteParser(new File(file.getParentFile(), "routes.txt"), anAgency).parse();
 			
 			//Trips
-			new TripParser(new File(file.getParentFile(), "trips.txt"), anAgency).parse();
+			TreeMap<String, Trip> trips = new TripParser(new File(file.getParentFile(), "trips.txt"), anAgency).parse();
 			
 			//Stops
-			new StopParser(new File(file.getParentFile(),"stops.txt"), anAgency).parse();
+			TreeMap<String, Stop> stops = new StopParser(new File(file.getParentFile(),"stops.txt")).parse();
 			
 			//Stop times
-			new StopTimeParser(new File(file.getParentFile(), "stop_times.txt"), anAgency).parse();
+			new StopTimeParser(new File(file.getParentFile(), "stop_times.txt"), anAgency, stops, trips).parse();
 			
 		}
 		parser.close();

@@ -11,7 +11,6 @@ class Agency
   * -> * Route;
   * -> * FareAttribute;
   * -> * Service;
-  * -> * Stop;
   lazy String id;
   String name;
   String url;
@@ -26,7 +25,6 @@ class Route
 {
   * -> * Trip;
   * -> * FareRule;
-  lazy Agency agency;
   String id;
   String shortName;
   String longName;
@@ -37,15 +35,14 @@ class Route
   lazy String textColor;
   lazy String sortOrder;
   
-  key {agency, id}
+  key {id}
 }
 
 class Trip
 {
   * -> * StopTime;
   * -> * Frequency;
-  * -- * Service;
-  Route route;
+  * -> * Service;
   * -> 0..1 Shape;
   String id;
   lazy String headsign;
@@ -55,12 +52,11 @@ class Trip
   defaulted Integer wheelchairAccessible = 0;
   defaulted Integer bikesAllowed = 0;
   
-  key {route, id}
+  key {id}
 }
 
 class StopTime
 {
-  * -> 1 Trip;
   * -> 1 Stop;
   Time arrivalTime;
   Time departureTime;
@@ -93,7 +89,7 @@ class Stop
 class FareAttribute
 {
   * -> * FareRule;
-  Agency agency;
+  String agencyId;
   String id;
   Float price;
   String currency;
@@ -101,13 +97,12 @@ class FareAttribute
   defaulted Integer transfers = 3;
   lazy Integer transferDuration;
   
-  key {agency, id}
+  key {agencyId, id}
 }
 
 class FareRule
 {
   FareAttribute attribute;
-  * -> 0..1 Route;
   lazy String originId;
   lazy String destinationId;
   lazy String containsId;
@@ -160,7 +155,6 @@ class CalendarDate
 
 class Frequency
 {
-  * -> 1 Trip;
   Time startTime;
   Time endTime;
   Integer headwaySecs;

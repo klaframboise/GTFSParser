@@ -4,8 +4,8 @@
 package com.kevinlaframboise.gtfsparser.model;
 import java.util.*;
 
-// line 43 "../../../../GTFSModel.ump"
-// line 203 "../../../../GTFSModel.ump"
+// line 41 "../../../../GTFSModel.ump"
+// line 197 "../../../../GTFSModel.ump"
 public class Trip
 {
 
@@ -14,7 +14,6 @@ public class Trip
   //------------------------
 
   //Trip Attributes
-  private Route route;
   private String id;
   private String headsign;
   private String shortName;
@@ -31,19 +30,16 @@ public class Trip
 
   //Helper Variables
   private int cachedHashCode;
-  private boolean canSetRoute;
   private boolean canSetId;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public Trip(Route aRoute, String aId)
+  public Trip(String aId)
   {
     cachedHashCode = -1;
-    canSetRoute = true;
     canSetId = true;
-    route = aRoute;
     id = aId;
     headsign = null;
     shortName = null;
@@ -59,15 +55,6 @@ public class Trip
   //------------------------
   // INTERFACE
   //------------------------
-
-  public boolean setRoute(Route aRoute)
-  {
-    boolean wasSet = false;
-    if (!canSetRoute) { return false; }
-    route = aRoute;
-    wasSet = true;
-    return wasSet;
-  }
 
   public boolean setId(String aId)
   {
@@ -140,11 +127,6 @@ public class Trip
     bikesAllowed = getDefaultBikesAllowed();
     wasReset = true;
     return wasReset;
-  }
-
-  public Route getRoute()
-  {
-    return route;
   }
 
   public String getId()
@@ -302,7 +284,6 @@ public class Trip
   {
     boolean wasAdded = false;
     if (stopTimes.contains(aStopTime)) { return false; }
-    if (stopTimes.contains(aStopTime)) { return false; }
     stopTimes.add(aStopTime);
     wasAdded = true;
     return wasAdded;
@@ -359,7 +340,6 @@ public class Trip
   public boolean addFrequency(Frequency aFrequency)
   {
     boolean wasAdded = false;
-    if (frequencies.contains(aFrequency)) { return false; }
     if (frequencies.contains(aFrequency)) { return false; }
     frequencies.add(aFrequency);
     wasAdded = true;
@@ -419,42 +399,17 @@ public class Trip
     boolean wasAdded = false;
     if (services.contains(aService)) { return false; }
     services.add(aService);
-    if (aService.indexOfTrip(this) != -1)
-    {
-      wasAdded = true;
-    }
-    else
-    {
-      wasAdded = aService.addTrip(this);
-      if (!wasAdded)
-      {
-        services.remove(aService);
-      }
-    }
+    wasAdded = true;
     return wasAdded;
   }
 
   public boolean removeService(Service aService)
   {
     boolean wasRemoved = false;
-    if (!services.contains(aService))
+    if (services.contains(aService))
     {
-      return wasRemoved;
-    }
-
-    int oldIndex = services.indexOf(aService);
-    services.remove(oldIndex);
-    if (aService.indexOfTrip(this) == -1)
-    {
+      services.remove(aService);
       wasRemoved = true;
-    }
-    else
-    {
-      wasRemoved = aService.removeTrip(this);
-      if (!wasRemoved)
-      {
-        services.add(oldIndex,aService);
-      }
     }
     return wasRemoved;
   }
@@ -506,15 +461,6 @@ public class Trip
 
     Trip compareTo = (Trip)obj;
   
-    if (getRoute() == null && compareTo.getRoute() != null)
-    {
-      return false;
-    }
-    else if (getRoute() != null && !getRoute().equals(compareTo.getRoute()))
-    {
-      return false;
-    }
-
     if (getId() == null && compareTo.getId() != null)
     {
       return false;
@@ -534,15 +480,6 @@ public class Trip
       return cachedHashCode;
     }
     cachedHashCode = 17;
-    if (getRoute() != null)
-    {
-      cachedHashCode = cachedHashCode * 23 + getRoute().hashCode();
-    }
-    else
-    {
-      cachedHashCode = cachedHashCode * 23;
-    }
-
     if (getId() != null)
     {
       cachedHashCode = cachedHashCode * 23 + getId().hashCode();
@@ -552,7 +489,6 @@ public class Trip
       cachedHashCode = cachedHashCode * 23;
     }
 
-    canSetRoute = false;
     canSetId = false;
     return cachedHashCode;
   }
@@ -561,12 +497,7 @@ public class Trip
   {
     stopTimes.clear();
     frequencies.clear();
-    ArrayList<Service> copyOfServices = new ArrayList<Service>(services);
     services.clear();
-    for(Service aService : copyOfServices)
-    {
-      aService.removeTrip(this);
-    }
     shape = null;
   }
 
@@ -581,7 +512,6 @@ public class Trip
             "block" + ":" + getBlock()+ "," +
             "wheelchairAccessible" + ":" + getWheelchairAccessible()+ "," +
             "bikesAllowed" + ":" + getBikesAllowed()+ "]" + System.getProperties().getProperty("line.separator") +
-            "  " + "route" + "=" + (getRoute() != null ? !getRoute().equals(this)  ? getRoute().toString().replaceAll("  ","    ") : "this" : "null") + System.getProperties().getProperty("line.separator") +
             "  " + "shape = "+(getShape()!=null?Integer.toHexString(System.identityHashCode(getShape())):"null");
   }
 }

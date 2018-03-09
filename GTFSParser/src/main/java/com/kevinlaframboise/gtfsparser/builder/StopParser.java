@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URI;
 import java.net.URL;
+import java.util.TreeMap;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
@@ -15,7 +16,7 @@ import org.apache.commons.io.input.BOMInputStream;
 import com.kevinlaframboise.gtfsparser.model.Agency;
 import com.kevinlaframboise.gtfsparser.model.Stop;
 
-public class StopParser implements GTFSParser {
+public class StopParser {
 
 	public static final int NUM_OF_REQ_FIELDS = 4;
 
@@ -23,11 +24,6 @@ public class StopParser implements GTFSParser {
 	 * File to be parsed, trips.txt respecting the GTFS format.
 	 */
 	private File file;
-
-	/**
-	 * Agency for which this trip is being parsed
-	 */
-	private Agency agency;
 
 	/* Stop Attributes */
 	private String id;
@@ -43,13 +39,14 @@ public class StopParser implements GTFSParser {
 	private String timezone;
 	private int wheelchairBoarding;
 
-	public StopParser(File file, Agency agency) {
+	public StopParser(File file) {
 		this.file = file;
-		this.agency = agency;
 	}
 
-	@Override
-	public void parse() throws IOException {
+	public TreeMap<String, Stop> parse() throws IOException {
+		// Initialize return object
+		TreeMap<String, Stop> stops = new TreeMap<String, Stop>(); 
+		
 		// Get file url
 		URI fileUri = file.toURI();
 		URL fileUrl = fileUri.toURL();
@@ -130,13 +127,12 @@ public class StopParser implements GTFSParser {
 				// Do nothing, optional attribute
 			}
 			
-			// Add stop to agency
-			agency.addStop(aStop);
+			// Add stop to list of stops
+			stops.put(id, aStop);
 
 		}
-
 		parser.close();
-
+		return stops;
 	}
 
 	enum Headers {

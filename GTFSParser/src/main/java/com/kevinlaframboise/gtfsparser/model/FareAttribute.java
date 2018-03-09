@@ -4,8 +4,8 @@
 package com.kevinlaframboise.gtfsparser.model;
 import java.util.*;
 
-// line 93 "../../../../GTFSModel.ump"
-// line 223 "../../../../GTFSModel.ump"
+// line 89 "../../../../GTFSModel.ump"
+// line 217 "../../../../GTFSModel.ump"
 public class FareAttribute
 {
 
@@ -14,7 +14,7 @@ public class FareAttribute
   //------------------------
 
   //FareAttribute Attributes
-  private Agency agency;
+  private String agencyId;
   private String id;
   private float price;
   private String currency;
@@ -27,19 +27,19 @@ public class FareAttribute
 
   //Helper Variables
   private int cachedHashCode;
-  private boolean canSetAgency;
+  private boolean canSetAgencyId;
   private boolean canSetId;
 
   //------------------------
   // CONSTRUCTOR
   //------------------------
 
-  public FareAttribute(Agency aAgency, String aId, float aPrice, String aCurrency, int aPaymentMethod)
+  public FareAttribute(String aAgencyId, String aId, float aPrice, String aCurrency, int aPaymentMethod)
   {
     cachedHashCode = -1;
-    canSetAgency = true;
+    canSetAgencyId = true;
     canSetId = true;
-    agency = aAgency;
+    agencyId = aAgencyId;
     id = aId;
     price = aPrice;
     currency = aCurrency;
@@ -53,11 +53,11 @@ public class FareAttribute
   // INTERFACE
   //------------------------
 
-  public boolean setAgency(Agency aAgency)
+  public boolean setAgencyId(String aAgencyId)
   {
     boolean wasSet = false;
-    if (!canSetAgency) { return false; }
-    agency = aAgency;
+    if (!canSetAgencyId) { return false; }
+    agencyId = aAgencyId;
     wasSet = true;
     return wasSet;
   }
@@ -119,9 +119,9 @@ public class FareAttribute
     return wasSet;
   }
 
-  public Agency getAgency()
+  public String getAgencyId()
   {
-    return agency;
+    return agencyId;
   }
 
   public String getId()
@@ -253,11 +253,11 @@ public class FareAttribute
 
     FareAttribute compareTo = (FareAttribute)obj;
   
-    if (getAgency() == null && compareTo.getAgency() != null)
+    if (getAgencyId() == null && compareTo.getAgencyId() != null)
     {
       return false;
     }
-    else if (getAgency() != null && !getAgency().equals(compareTo.getAgency()))
+    else if (getAgencyId() != null && !getAgencyId().equals(compareTo.getAgencyId()))
     {
       return false;
     }
@@ -281,9 +281,9 @@ public class FareAttribute
       return cachedHashCode;
     }
     cachedHashCode = 17;
-    if (getAgency() != null)
+    if (getAgencyId() != null)
     {
-      cachedHashCode = cachedHashCode * 23 + getAgency().hashCode();
+      cachedHashCode = cachedHashCode * 23 + getAgencyId().hashCode();
     }
     else
     {
@@ -299,7 +299,7 @@ public class FareAttribute
       cachedHashCode = cachedHashCode * 23;
     }
 
-    canSetAgency = false;
+    canSetAgencyId = false;
     canSetId = false;
     return cachedHashCode;
   }
@@ -314,11 +314,11 @@ public class FareAttribute
   {
     return super.toString() + "["+
             "id" + ":" + getId()+ "," +
+            "agencyId" + ":" + getAgencyId()+ "," +
             "price" + ":" + getPrice()+ "," +
             "currency" + ":" + getCurrency()+ "," +
             "paymentMethod" + ":" + getPaymentMethod()+ "," +
             "transfers" + ":" + getTransfers()+ "," +
-            "transferDuration" + ":" + getTransferDuration()+ "]" + System.getProperties().getProperty("line.separator") +
-            "  " + "agency" + "=" + (getAgency() != null ? !getAgency().equals(this)  ? getAgency().toString().replaceAll("  ","    ") : "this" : "null");
+            "transferDuration" + ":" + getTransferDuration()+ "]";
   }
 }

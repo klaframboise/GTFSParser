@@ -7,13 +7,13 @@ import java.io.Reader;
 import java.net.URI;
 import java.net.URL;
 import java.sql.Time;
+import java.util.TreeMap;
 
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.io.input.BOMInputStream;
 
-import com.kevinlaframboise.gtfsparser.builder.StopParser.Headers;
 import com.kevinlaframboise.gtfsparser.controller.AgencyController;
 import com.kevinlaframboise.gtfsparser.model.Agency;
 import com.kevinlaframboise.gtfsparser.model.Stop;
@@ -33,6 +33,16 @@ public class StopTimeParser implements GTFSParser {
 	 * Agency for which this stop times is being parsed
 	 */
 	private Agency agency;
+	
+	/**
+	 * Stops referenced by the stop_times records
+	 */
+	private TreeMap<String, Stop> stops;
+	
+	/**
+	 * Trips referenced by the stop_times records
+	 */
+	private TreeMap<String, Trip> trips;
 
 	/* Stop Attributes */
 	private Time arrivalTime;
@@ -46,9 +56,11 @@ public class StopTimeParser implements GTFSParser {
 	private Trip trip;
 	private Stop stop;
 
-	public StopTimeParser(File file, Agency agency) {
+	public StopTimeParser(File file, Agency agency, TreeMap<String, Stop> stops, TreeMap<String, Trip> trips) {
 		this.file = file;
 		this.agency = agency;
+		this.stops = stops;
+		this.trips = trips;
 	}
 
 	@Override
@@ -80,11 +92,11 @@ public class StopTimeParser implements GTFSParser {
 			sequence = Integer.parseInt(record.get(Headers.stop_sequence));
 			
 			/* Get associated objects */
-			aTrip = controller.getTripByIdInAgency(agency, tripId);
-			aStop = controller.getStopById(agency, stopId);
+			aTrip = trips.get(tripId);
+			aStop = stops.get(stopId);
 			
 			// Create stop times object
-			aStopTime = new StopTime(arrivalTime, departureTime, sequence, aTrip, aStop);
+			aStopTime = new StopTime(arrivalTime, departureTime, sequence, aStop);
 			
 			/* Optional attributes */
 			try {

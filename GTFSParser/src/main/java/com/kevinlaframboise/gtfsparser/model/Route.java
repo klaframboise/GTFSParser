@@ -4,8 +4,8 @@
 package com.kevinlaframboise.gtfsparser.model;
 import java.util.*;
 
-// line 25 "../../../../GTFSModel.ump"
-// line 196 "../../../../GTFSModel.ump"
+// line 24 "../../../../GTFSModel.ump"
+// line 190 "../../../../GTFSModel.ump"
 public class Route
 {
 
@@ -14,7 +14,6 @@ public class Route
   //------------------------
 
   //Route Attributes
-  private Agency agency;
   private String id;
   private String shortName;
   private String longName;
@@ -31,7 +30,6 @@ public class Route
 
   //Helper Variables
   private int cachedHashCode;
-  private boolean canSetAgency;
   private boolean canSetId;
 
   //------------------------
@@ -41,7 +39,6 @@ public class Route
   public Route(String aId, String aShortName, String aLongName, int aType)
   {
     cachedHashCode = -1;
-    canSetAgency = true;
     canSetId = true;
     id = aId;
     shortName = aShortName;
@@ -59,15 +56,6 @@ public class Route
   //------------------------
   // INTERFACE
   //------------------------
-
-  public boolean setAgency(Agency aAgency)
-  {
-    boolean wasSet = false;
-    if (!canSetAgency) { return false; }
-    agency = aAgency;
-    wasSet = true;
-    return wasSet;
-  }
 
   public boolean setId(String aId)
   {
@@ -140,11 +128,6 @@ public class Route
     sortOrder = aSortOrder;
     wasSet = true;
     return wasSet;
-  }
-
-  public Agency getAgency()
-  {
-    return agency;
   }
 
   public String getId()
@@ -318,7 +301,6 @@ public class Route
   {
     boolean wasAdded = false;
     if (fareRules.contains(aFareRule)) { return false; }
-    if (fareRules.contains(aFareRule)) { return false; }
     fareRules.add(aFareRule);
     wasAdded = true;
     return wasAdded;
@@ -374,15 +356,6 @@ public class Route
 
     Route compareTo = (Route)obj;
   
-    if (getAgency() == null && compareTo.getAgency() != null)
-    {
-      return false;
-    }
-    else if (getAgency() != null && !getAgency().equals(compareTo.getAgency()))
-    {
-      return false;
-    }
-
     if (getId() == null && compareTo.getId() != null)
     {
       return false;
@@ -402,15 +375,6 @@ public class Route
       return cachedHashCode;
     }
     cachedHashCode = 17;
-    if (getAgency() != null)
-    {
-      cachedHashCode = cachedHashCode * 23 + getAgency().hashCode();
-    }
-    else
-    {
-      cachedHashCode = cachedHashCode * 23;
-    }
-
     if (getId() != null)
     {
       cachedHashCode = cachedHashCode * 23 + getId().hashCode();
@@ -420,7 +384,6 @@ public class Route
       cachedHashCode = cachedHashCode * 23;
     }
 
-    canSetAgency = false;
     canSetId = false;
     return cachedHashCode;
   }
@@ -443,7 +406,6 @@ public class Route
             "url" + ":" + getUrl()+ "," +
             "color" + ":" + getColor()+ "," +
             "textColor" + ":" + getTextColor()+ "," +
-            "sortOrder" + ":" + getSortOrder()+ "]" + System.getProperties().getProperty("line.separator") +
-            "  " + "agency" + "=" + (getAgency() != null ? !getAgency().equals(this)  ? getAgency().toString().replaceAll("  ","    ") : "this" : "null");
+            "sortOrder" + ":" + getSortOrder()+ "]";
   }
 }
