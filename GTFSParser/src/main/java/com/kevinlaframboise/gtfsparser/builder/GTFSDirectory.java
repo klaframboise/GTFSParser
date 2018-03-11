@@ -5,6 +5,8 @@ import java.io.FilenameFilter;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.kevinlaframboise.gtfsparser.listener.ParsingProgressListener;
+
 
 public class GTFSDirectory extends File {
 	
@@ -45,8 +47,12 @@ public class GTFSDirectory extends File {
 	}
 	
 	public void parseGTFS() {
+		parseGTFS(null);
+	}
+	
+	public void parseGTFS(ParsingProgressListener listener) {
 		for(AgencyDirectory dir : agencyDirectories) {
-			dir.parseAgency();
+			dir.parseAgency(listener);
 		}
 	}
 
