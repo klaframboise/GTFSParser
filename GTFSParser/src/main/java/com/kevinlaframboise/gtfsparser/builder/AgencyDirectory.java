@@ -3,6 +3,8 @@ package com.kevinlaframboise.gtfsparser.builder;
 import java.io.File;
 import java.io.IOException;
 
+import com.kevinlaframboise.gtfsparser.listener.ParsingProgressListener;
+
 public class AgencyDirectory extends File {
 	
 	/**
@@ -15,8 +17,14 @@ public class AgencyDirectory extends File {
 	}
 	
 	public void parseAgency() {
+		parseAgency(null);
+	}
+	
+	public void parseAgency(ParsingProgressListener listener) {
 		try {
-			new AgencyParser(new File(this, "agency.txt")).parse();
+			AgencyParser parser = new AgencyParser(new File(this, "agency.txt"));
+			if(listener != null) parser.addListener(listener);
+			parser.parse();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
