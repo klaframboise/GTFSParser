@@ -6,6 +6,8 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URI;
 import java.net.URL;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.TreeMap;
 
 import org.apache.commons.csv.CSVFormat;
@@ -14,6 +16,7 @@ import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.io.input.BOMInputStream;
 
 import com.kevinlaframboise.gtfsparser.controller.AgencyController;
+import com.kevinlaframboise.gtfsparser.listener.ParsingProgressListener;
 import com.kevinlaframboise.gtfsparser.model.Agency;
 import com.kevinlaframboise.gtfsparser.model.Stop;
 import com.kevinlaframboise.gtfsparser.model.Trip;
@@ -36,6 +39,11 @@ public class AgencyParser implements GTFSParser {
 	 * Controller handling the model.
 	 */
 	private AgencyController controller;
+	
+	/**
+	 * List of progress listeners
+	 */
+	private List<ParsingProgressListener> listeners;
 
 	/* Agency Attributes */
 	private String id;
@@ -50,6 +58,7 @@ public class AgencyParser implements GTFSParser {
 	public AgencyParser(File file) {
 		this.file = file;
 		controller = new AgencyController();
+		listeners = new ArrayList<>();
 	}
 	
 	@Override
@@ -131,9 +140,28 @@ public class AgencyParser implements GTFSParser {
 			//Stop times
 			new StopTimeParser(new File(file.getParentFile(), "stop_times.txt"), stops, trips).parse();
 			
+			signalListeners(anAgency);
 		}
 		
 		parser.close();
+	}
+	
+	/**
+	 * Adds the given listener to the list of listeners
+	 * @param listener
+	 */
+	public void addListener(ParsingProgressListener listener) {
+		listeners.add(listener);
+	}
+	
+	/**
+	 * Calls onAgencyCreate with the given agency on all listeners
+	 * @param agency
+	 */
+	private void signalListeners(Agency agency) {
+		for(ParsingProgressListener listener : listeners) {
+			listener.onAgencyCreate(agency);
+		}
 	}
 	
 	/**

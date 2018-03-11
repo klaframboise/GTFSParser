@@ -1,5 +1,6 @@
 package com.kevinlaframboise.gtfsparser.serialization;
 
+import java.io.BufferedInputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -70,7 +71,7 @@ public class GTFSPersistence {
 		GTFSModel newGtfs = null;
 		
 		try {
-			GZIPInputStream in = new GZIPInputStream(new FileInputStream(gzipFile));
+			GZIPInputStream in = new GZIPInputStream(new BufferedInputStream(new FileInputStream(gzipFile), 2048));
 			newGtfs = (GTFSModel)JsonReader.jsonToJava(in, args);
 			in.close();
 		} catch (FileNotFoundException e) {
