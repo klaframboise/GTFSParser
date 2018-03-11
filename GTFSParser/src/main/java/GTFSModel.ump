@@ -58,8 +58,9 @@ class Trip
 class StopTime
 {
   * -> 1 Stop;
-  Time arrivalTime;
-  Time departureTime;
+  // Using date objects instead of time because the serialization library is incompatible w/ java.sql.Time
+  Date arrivalTime;
+  Date departureTime;
   Integer sequence;
   lazy String headsign;
   defaulted Integer pickupType = 0;
@@ -155,8 +156,8 @@ class CalendarDate
 
 class Frequency
 {
-  Time startTime;
-  Time endTime;
+  Date startTime;
+  Date endTime;
   Integer headwaySecs;
   defaulted Boolean exactTimes = false;
 }

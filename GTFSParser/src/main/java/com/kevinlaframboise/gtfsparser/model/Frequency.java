@@ -2,7 +2,7 @@
 /*This code was generated using the UMPLE 1.27.0.3728.d139ed893 modeling language!*/
 
 package com.kevinlaframboise.gtfsparser.model;
-import java.sql.Time;
+import java.sql.Date;
 
 // line 156 "../../../../GTFSModel.ump"
 // line 237 "../../../../GTFSModel.ump"
@@ -14,8 +14,8 @@ public class Frequency
   //------------------------
 
   //Frequency Attributes
-  private Time startTime;
-  private Time endTime;
+  private Date startTime;
+  private Date endTime;
   private int headwaySecs;
   private boolean exactTimes;
 
@@ -23,7 +23,7 @@ public class Frequency
   // CONSTRUCTOR
   //------------------------
 
-  public Frequency(Time aStartTime, Time aEndTime, int aHeadwaySecs)
+  public Frequency(Date aStartTime, Date aEndTime, int aHeadwaySecs)
   {
     startTime = aStartTime;
     endTime = aEndTime;
@@ -35,7 +35,7 @@ public class Frequency
   // INTERFACE
   //------------------------
 
-  public boolean setStartTime(Time aStartTime)
+  public boolean setStartTime(Date aStartTime)
   {
     boolean wasSet = false;
     startTime = aStartTime;
@@ -43,7 +43,7 @@ public class Frequency
     return wasSet;
   }
 
-  public boolean setEndTime(Time aEndTime)
+  public boolean setEndTime(Date aEndTime)
   {
     boolean wasSet = false;
     endTime = aEndTime;
@@ -75,12 +75,12 @@ public class Frequency
     return wasReset;
   }
 
-  public Time getStartTime()
+  public Date getStartTime()
   {
     return startTime;
   }
 
-  public Time getEndTime()
+  public Date getEndTime()
   {
     return endTime;
   }

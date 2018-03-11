@@ -111,11 +111,13 @@ public class AgencyParser implements GTFSParser {
 			
 			/* Parse agency's association */
 			// Calendar
-			new CalendarParser(new File(file.getParentFile(), "calendar.txt"), anAgency).parse();
+			File cFile = new File(file.getParentFile(), "calendar.txt");
+			if(cFile.exists()) new CalendarParser(cFile, anAgency).parse();
 			
 			// Calendar dates, optional file
 			File cDate = new File(file.getParentFile(), "calendar_dates.txt");
 			if (cDate.exists()) new CalendarDateParser(cDate, anAgency).parse();
+			else if(!cDate.exists() && !cFile.exists()) throw new java.io.FileNotFoundException("Was expecting either of calendar.txt or calendar_dates.txt. Neither was found.");
 			
 			//Routes
 			new RouteParser(new File(file.getParentFile(), "routes.txt"), anAgency).parse();
@@ -127,9 +129,10 @@ public class AgencyParser implements GTFSParser {
 			TreeMap<String, Stop> stops = new StopParser(new File(file.getParentFile(),"stops.txt")).parse();
 			
 			//Stop times
-			new StopTimeParser(new File(file.getParentFile(), "stop_times.txt"), anAgency, stops, trips).parse();
+			new StopTimeParser(new File(file.getParentFile(), "stop_times.txt"), stops, trips).parse();
 			
 		}
+		
 		parser.close();
 	}
 	

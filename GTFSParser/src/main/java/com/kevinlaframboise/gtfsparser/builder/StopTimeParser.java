@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.net.URI;
 import java.net.URL;
+import java.sql.Date;
 import java.sql.Time;
 import java.util.TreeMap;
 
@@ -14,8 +15,6 @@ import org.apache.commons.csv.CSVParser;
 import org.apache.commons.csv.CSVRecord;
 import org.apache.commons.io.input.BOMInputStream;
 
-import com.kevinlaframboise.gtfsparser.controller.AgencyController;
-import com.kevinlaframboise.gtfsparser.model.Agency;
 import com.kevinlaframboise.gtfsparser.model.Stop;
 import com.kevinlaframboise.gtfsparser.model.StopTime;
 import com.kevinlaframboise.gtfsparser.model.Trip;
@@ -28,11 +27,6 @@ public class StopTimeParser implements GTFSParser {
 	 * File to be parsed, stop_times.txt respecting the GTFS format.
 	 */
 	private File file;
-
-	/**
-	 * Agency for which this stop times is being parsed
-	 */
-	private Agency agency;
 	
 	/**
 	 * Stops referenced by the stop_times records
@@ -45,20 +39,17 @@ public class StopTimeParser implements GTFSParser {
 	private TreeMap<String, Trip> trips;
 
 	/* Stop Attributes */
-	private Time arrivalTime;
-	private Time departureTime;
+	private Date arrivalTime;
+	private Date departureTime;
 	private int sequence;
 	private String headsign;
 	private int pickupType;
 	private int dropOffType;
 	private float shapeDistTraveled;
 	private int timepoint;
-	private Trip trip;
-	private Stop stop;
 
-	public StopTimeParser(File file, Agency agency, TreeMap<String, Stop> stops, TreeMap<String, Trip> trips) {
+	public StopTimeParser(File file, TreeMap<String, Stop> stops, TreeMap<String, Trip> trips) {
 		this.file = file;
-		this.agency = agency;
 		this.stops = stops;
 		this.trips = trips;
 	}
@@ -74,7 +65,6 @@ public class StopTimeParser implements GTFSParser {
 
 		/* Parse the stop time */ 
 		CSVParser parser = new CSVParser(reader, CSVFormat.EXCEL.withFirstRecordAsHeader());
-		AgencyController controller = new AgencyController();
 		StopTime aStopTime;
 		String tripId;
 		Trip aTrip;
@@ -86,8 +76,8 @@ public class StopTimeParser implements GTFSParser {
 			
 			/* Required attributes */
 			tripId = record.get(Headers.trip_id);
-			arrivalTime = Time.valueOf(record.get(Headers.arrival_time));
-			departureTime = Time.valueOf(record.get(Headers.departure_time));
+			arrivalTime = new Date(Time.valueOf(record.get(Headers.arrival_time)).getTime());
+			departureTime = new Date(Time.valueOf(record.get(Headers.departure_time)).getTime());
 			stopId = record.get(Headers.stop_id);
 			sequence = Integer.parseInt(record.get(Headers.stop_sequence));
 			

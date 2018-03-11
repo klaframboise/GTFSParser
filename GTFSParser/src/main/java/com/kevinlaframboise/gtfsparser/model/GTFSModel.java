@@ -3,7 +3,6 @@
 
 package com.kevinlaframboise.gtfsparser.model;
 import java.util.*;
-import java.sql.Date;
 
 // line 2 "../../../../GTFSModel.ump"
 // line 252 "../../../../GTFSModel.ump"

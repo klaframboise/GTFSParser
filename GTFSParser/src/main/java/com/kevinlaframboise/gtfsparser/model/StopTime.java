@@ -2,7 +2,7 @@
 /*This code was generated using the UMPLE 1.27.0.3728.d139ed893 modeling language!*/
 
 package com.kevinlaframboise.gtfsparser.model;
-import java.sql.Time;
+import java.sql.Date;
 
 // line 58 "../../../../GTFSModel.ump"
 // line 204 "../../../../GTFSModel.ump"
@@ -14,8 +14,8 @@ public class StopTime
   //------------------------
 
   //StopTime Attributes
-  private Time arrivalTime;
-  private Time departureTime;
+  private Date arrivalTime;
+  private Date departureTime;
   private int sequence;
   private String headsign;
   private int pickupType;
@@ -30,7 +30,7 @@ public class StopTime
   // CONSTRUCTOR
   //------------------------
 
-  public StopTime(Time aArrivalTime, Time aDepartureTime, int aSequence, Stop aStop)
+  public StopTime(Date aArrivalTime, Date aDepartureTime, int aSequence, Stop aStop)
   {
     arrivalTime = aArrivalTime;
     departureTime = aDepartureTime;
@@ -50,7 +50,7 @@ public class StopTime
   // INTERFACE
   //------------------------
 
-  public boolean setArrivalTime(Time aArrivalTime)
+  public boolean setArrivalTime(Date aArrivalTime)
   {
     boolean wasSet = false;
     arrivalTime = aArrivalTime;
@@ -58,7 +58,7 @@ public class StopTime
     return wasSet;
   }
 
-  public boolean setDepartureTime(Time aDepartureTime)
+  public boolean setDepartureTime(Date aDepartureTime)
   {
     boolean wasSet = false;
     departureTime = aDepartureTime;
@@ -138,12 +138,12 @@ public class StopTime
     return wasReset;
   }
 
-  public Time getArrivalTime()
+  public Date getArrivalTime()
   {
     return arrivalTime;
   }
 
-  public Time getDepartureTime()
+  public Date getDepartureTime()
   {
     return departureTime;
   }

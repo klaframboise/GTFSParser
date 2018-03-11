@@ -32,12 +32,6 @@ dependencies {
 	// https://mvnrepository.com/artifact/commons-io/commons-io
 	compile group: 'commons-io', name: 'commons-io', version: '2.6'
 	
-	// https://github.com/google/gson
-	compile 'com.google.code.gson:gson:2.8.2'
-	
-	// https://mvnrepository.com/artifact/com.thoughtworks.xstream/xstream
-	compile group: 'com.thoughtworks.xstream', name: 'xstream', version: '1.4.10'
-	
 	// https://mvnrepository.com/artifact/com.cedarsoftware/json-io
 	compile group: 'com.cedarsoftware', name: 'json-io', version: '4.10.0'
 	
